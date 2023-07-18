@@ -49,14 +49,20 @@ function App() {
       const [a, b, c] = combo
       if (
         boardToCheck[a] &&
-        boardToCheck[a] === boardToCheck[b] &&
-        boardToCheck[a] === boardToCheck[c]
+        boardToCheck[a] == boardToCheck[b] &&
+        boardToCheck[a] == boardToCheck[c]
       ){
         return boardToCheck[a]
       }
     }
     // si no hay ganador
     return null
+  }
+
+  const resetGame = () => {
+    setBoard(Array(9).fill(null))
+    setTurn(TURNS.X)
+    setWinner(null)
   }
 
   const updateBoard = (index) => {
@@ -67,11 +73,11 @@ function App() {
     newBoard[index] = turn
     setBoard(newBoard)
     // cambiamos de turno
-    const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
+    const newTurn = turn == TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
     // revisar si hay ganador
     const newWinner = checkWinner(newBoard)
-    if (newWinner){
+    if (newWinner) {
       setWinner(newWinner)
     }
   }
@@ -104,6 +110,30 @@ function App() {
           {TURNS.O}
         </Square>
       </section>
+      
+      {
+        winner != null && (
+          <section className='winner'>
+            <div className='text'>
+              <h2>
+                {
+                  winner == false
+                    ? 'Empate'
+                    : 'Ha ganado '
+                }
+              </h2>
+              <header className='win'>
+                {winner && <Square>{winner}</Square>}
+              </header>
+                
+              <footer>
+                <button onClick={resetGame}>Empezar de nuevo</button>
+              </footer>
+              
+            </div>
+          </section>
+        )
+      }
 
     </main>   
   )
