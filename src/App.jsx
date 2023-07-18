@@ -7,9 +7,10 @@ import { WINNER_COMBOS } from './constants'
 import { WinnerModal } from './components/WinnerModal'
 
 function App() {
-  const [board, setBoard] = useState(
-    Array(9).fill(null)
-  )
+  const [board, setBoard] = useState(() => {
+    const boardFromStorage = window.localStorage.getItem('board')
+    return boardFromStorage ? JSON.parse(boardFromStorage) : Array(9).fill(null)
+  })
   
   const[turn, setTurn] = useState(TURNS.X)
   // null es que no hay ganador y false es que hay empate
@@ -51,6 +52,9 @@ function App() {
     // cambiamos de turno
     const newTurn = turn == TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
+    // guardar aqui partida
+    window.localStorage.setItem('board', JSON.stringify(newBoard))
+    window.localStorage.setItem('board', turn)
     // revisar si hay ganador
     const newWinner = checkWinner(newBoard)
     if (newWinner) {
