@@ -26,8 +26,8 @@ function App() {
       const [a, b, c] = combo
       if (
         boardToCheck[a] &&
-        boardToCheck[a] == boardToCheck[b] &&
-        boardToCheck[a] == boardToCheck[c]
+        boardToCheck[a] === boardToCheck[b] &&
+        boardToCheck[a] === boardToCheck[c]  
       ){
         return boardToCheck[a]
       }
@@ -57,7 +57,7 @@ function App() {
     newBoard[index] = turn
     setBoard(newBoard)
     // cambiamos de turno
-    const newTurn = turn == TURNS.X ? TURNS.O : TURNS.X
+    const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
     // guardar aqui partida
     window.localStorage.setItem('board', JSON.stringify(newBoard))
@@ -94,10 +94,10 @@ function App() {
       </section>
 
       <section className='turn'>
-        <Square isSelected={turn == TURNS.X}>
+        <Square isSelected={turn === TURNS.X}>
           {TURNS.X}
         </Square>
-        <Square isSelected={turn == TURNS.O}>
+        <Square isSelected={turn === TURNS.O}>
           {TURNS.O}
         </Square>
       </section>
